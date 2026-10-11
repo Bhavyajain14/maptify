@@ -6,6 +6,7 @@ import * as mapView from './views/mapView.js';
 import * as formView from './views/formView.js';
 import * as listView from './views/listView.js';
 import * as toolbarView from './views/toolbarView.js';
+import * as summaryView from './views/summaryView.js';
 
 export class App {
   #workouts = [];
@@ -94,7 +95,7 @@ export class App {
   _deleteWorkout(id) {
     this.#workouts = this.#workouts.filter(work => work.id !== id);
     mapView.removeMarker(id);
-    listView.removeWorkout(id);
+    this._renderList();
     saveWorkouts(this.#workouts);
   }
 
@@ -106,6 +107,7 @@ export class App {
     else workouts.reverse(); // newest first
 
     listView.renderList(workouts);
+    summaryView.renderSummary(workouts);
   }
 
   _sort(sortBy) {
@@ -124,7 +126,7 @@ export class App {
 
     this.#workouts.forEach(work => mapView.removeMarker(work.id));
     this.#workouts = [];
-    listView.clearList();
+    this._renderList();
     saveWorkouts(this.#workouts);
   }
 }

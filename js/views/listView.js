@@ -35,11 +35,7 @@ export function renderList(workouts) {
   form.insertAdjacentHTML('afterend', workouts.map(workoutHtml).join(''));
 }
 
-export function removeWorkout(id) {
-  containerWorkouts.querySelector(`[data-id="${id}"]`)?.remove();
-}
-
-export function clearList() {
+function clearList() {
   containerWorkouts.querySelectorAll('.workout').forEach(el => el.remove());
 }
 

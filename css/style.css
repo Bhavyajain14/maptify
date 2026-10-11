@@ -83,6 +83,16 @@ a:visited {
   color: var(--color-dark--1);
 }
 
+.summary {
+  font-size: 1.4rem;
+  color: var(--color-light--1);
+  margin-bottom: 1.5rem;
+}
+
+.summary:empty {
+  display: none;
+}
+
 .workouts {
   list-style: none;
   height: 77vh;
