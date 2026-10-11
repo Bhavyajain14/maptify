@@ -53,7 +53,7 @@ export class App {
         !allNumbers(distance, duration, cadence) ||
         !allPositive(distance, duration, cadence)
       )
-        return alert('Inputs have to be positive numbers!');
+        return formView.showError('Please enter positive numbers only.');
 
       workout = new Running(this.#clickedCoords, distance, duration, cadence);
     }
@@ -64,7 +64,7 @@ export class App {
         !allNumbers(distance, duration, elevation) ||
         !allPositive(distance, duration)
       )
-        return alert('Inputs have to be positive numbers!');
+        return formView.showError('Please enter positive numbers only.');
 
       workout = new Cycling(this.#clickedCoords, distance, duration, elevation);
     }

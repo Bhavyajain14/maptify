@@ -4,8 +4,10 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+const errorEl = document.querySelector('.form__error');
 
 export function showForm() {
+  showError('');
   form.classList.remove('hidden');
   inputDistance.focus();
 }
@@ -13,11 +15,16 @@ export function showForm() {
 export function hideForm() {
   inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value =
     '';
+  showError('');
 
   // hide straight away, without the slide animation
   form.style.display = 'none';
   form.classList.add('hidden');
   setTimeout(() => (form.style.display = 'grid'), 1000);
+}
+
+export function showError(message) {
+  errorEl.textContent = message;
 }
 
 export function getFormData() {
