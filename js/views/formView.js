@@ -6,10 +6,23 @@ const inputElevation = document.getElementById('elevation');
 const inputDescription = document.getElementById('description');
 const errorEl = document.querySelector('.entry-form__error');
 
+const submitButton = form.querySelector('.entry-form__submit');
+
 // Focus stays on the map, so the user can keep clicking to add points
-export function showForm() {
+export function showForm(isEditing = false) {
   showError('');
+  submitButton.textContent = isEditing ? 'Save changes' : 'Save';
   form.classList.remove('is-hidden');
+}
+
+// Fills the form with a saved workout, for editing
+export function fillForm(workout) {
+  form.elements.type.value = workout.type;
+  showFieldsFor(workout.type);
+  inputDuration.value = workout.duration;
+  inputCadence.value = workout.cadence ?? '';
+  inputElevation.value = workout.elevationGain ?? '';
+  inputDescription.value = workout.description;
 }
 
 export function setDistance(km) {

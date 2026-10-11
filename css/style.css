@@ -293,6 +293,7 @@ textarea.field__input {
 
 .log-item__title {
   grid-column: 1 / -1;
+  padding-right: 70px; /* room for the edit and delete buttons */
   font-size: 15px;
   font-weight: 600;
 }
@@ -303,16 +304,34 @@ textarea.field__input {
   color: var(--muted);
 }
 
-.log-item__delete {
+.log-item__actions {
   position: absolute;
   top: 8px;
   right: 10px;
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.log-item__edit,
+.log-item__delete {
   line-height: 1;
   color: var(--muted);
   background: none;
   border: none;
   cursor: pointer;
+}
+
+.log-item__edit {
+  font-size: 13px;
+}
+
+.log-item__delete {
+  font-size: 20px;
+}
+
+.log-item__edit:hover {
+  color: var(--run);
 }
 
 .log-item__delete:hover {

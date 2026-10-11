@@ -22,7 +22,10 @@ function workoutHtml(workout) {
           ? `<p class="log-item__description">${escapeHtml(workout.description)}</p>`
           : ''
       }
-      <button type="button" class="log-item__delete" aria-label="Delete workout">&times;</button>
+      <div class="log-item__actions">
+        <button type="button" class="log-item__edit" aria-label="Edit workout">Edit</button>
+        <button type="button" class="log-item__delete" aria-label="Delete workout">&times;</button>
+      </div>
       ${detail(isRunning ? '🏃‍♂️' : '🚴‍♀️', workout.distance, 'km')}
       ${detail('⏱', workout.duration, 'min')}
       ${
@@ -40,12 +43,15 @@ export function renderList(workouts) {
   containerWorkouts.innerHTML = workouts.map(workoutHtml).join('');
 }
 
-export function addListClickHandler(onWorkoutClick, onDeleteClick) {
+export function addListClickHandler(onWorkoutClick, onEditClick, onDeleteClick) {
   containerWorkouts.addEventListener('click', function (e) {
     const workoutEl = e.target.closest('.log-item');
     if (!workoutEl) return;
 
-    if (e.target.closest('.log-item__delete')) onDeleteClick(workoutEl.dataset.id);
-    else onWorkoutClick(workoutEl.dataset.id);
+    const id = workoutEl.dataset.id;
+
+    if (e.target.closest('.log-item__delete')) onDeleteClick(id);
+    else if (e.target.closest('.log-item__edit')) onEditClick(id);
+    else onWorkoutClick(id);
   });
 }

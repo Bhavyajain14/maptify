@@ -11,7 +11,8 @@ import * as summaryView from './views/summaryView.js';
 
 export class App {
   #workouts = [];
-  #route = []; // points clicked on the map for the new workout
+  #route = []; // points clicked on the map for the workout being drawn
+  #editingId = null; // id of the workout being edited, or null for a new one
   #sortBy = 'newest';
 
   constructor() {
@@ -21,12 +22,13 @@ export class App {
     this._showMap();
     this._goToUserLocation();
     formView.addFormHandlers(
-      this._newWorkout.bind(this),
+      this._saveWorkout.bind(this),
       this._undoPoint.bind(this),
       this._cancelRoute.bind(this)
     );
     listView.addListClickHandler(
       this._goToWorkout.bind(this),
+      this._editWorkout.bind(this),
       this._deleteWorkout.bind(this)
     );
     toolbarView.addSortHandler(this._sort.bind(this));
@@ -57,7 +59,7 @@ export class App {
 
     this.#route.push([lat, lng]);
     this._updateDraft();
-    formView.showForm();
+    formView.showForm(this.#editingId !== null);
   }
 
   _updateDraft() {
@@ -72,9 +74,28 @@ export class App {
   }
 
   _cancelRoute() {
+    // when editing, put the original workout back on the map unchanged
+    const editing = this.#workouts.find(work => work.id === this.#editingId);
+    if (editing) mapView.renderWorkout(editing);
+
+    this.#editingId = null;
     this.#route = [];
     mapView.clearDraft();
     formView.hideForm();
+  }
+
+  _editWorkout(id) {
+    if (this.#editingId || this.#route.length) this._cancelRoute();
+
+    const workout = this.#workouts.find(work => work.id === id);
+    this.#editingId = id;
+    this.#route = [...workout.route];
+
+    mapView.removeWorkout(id); // the route is shown as the draft while editing
+    this._updateDraft();
+    mapView.showAll(this.#route);
+    formView.fillForm(workout);
+    formView.showForm(true);
   }
 
   // Returns what is wrong with the new workout (and which field), or nothing
@@ -90,7 +111,8 @@ export class App {
     // elevation gain is optional and can be 0 or negative (downhill)
   }
 
-  _newWorkout() {
+  // Saves a new workout, or the changes to the one being edited
+  _saveWorkout() {
     const data = formView.getFormData();
     data.distance = +routeDistanceKm(this.#route).toFixed(2);
 
@@ -104,7 +126,18 @@ export class App {
         : new Cycling(this.#route, distance, duration, elevation);
     workout.description = data.description;
 
-    this.#workouts.push(workout);
+    const index = this.#workouts.findIndex(work => work.id === this.#editingId);
+    if (index === -1) {
+      this.#workouts.push(workout);
+    } else {
+      // keep the original id and date, so it stays the same workout
+      workout.id = this.#workouts[index].id;
+      workout.date = this.#workouts[index].date;
+      workout._setTitle();
+      this.#workouts[index] = workout;
+    }
+
+    this.#editingId = null; // so cancelling below doesn't redraw the old version
     mapView.renderWorkout(workout);
     this._renderList();
     saveWorkouts(this.#workouts);
@@ -117,6 +150,11 @@ export class App {
   }
 
   _deleteWorkout(id) {
+    if (id === this.#editingId) {
+      this.#editingId = null;
+      this._cancelRoute();
+    }
+
     this.#workouts = this.#workouts.filter(work => work.id !== id);
     mapView.removeWorkout(id);
     this._renderList();
@@ -146,6 +184,9 @@ export class App {
   _clearAll() {
     if (!this.#workouts.length) return;
     if (!confirm('Delete all workouts?')) return;
+
+    this.#editingId = null;
+    this._cancelRoute();
 
     this.#workouts.forEach(work => mapView.removeWorkout(work.id));
     this.#workouts = [];
