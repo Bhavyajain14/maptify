@@ -1,5 +1,6 @@
 import { Running } from './models/running.js';
 import { Cycling } from './models/cycling.js';
+import { DEFAULT_COORDS } from './config.js';
 import { allNumbers, allPositive } from './helpers.js';
 import { saveWorkouts, loadWorkouts } from './storage.js';
 import * as mapView from './views/mapView.js';
@@ -17,7 +18,8 @@ export class App {
     this.#workouts = loadWorkouts();
     this._renderList();
 
-    this._getPosition();
+    this._showMap();
+    this._goToUserLocation();
     formView.addFormHandlers(this._newWorkout.bind(this));
     listView.addListClickHandler(
       this._goToWorkout.bind(this),
@@ -28,22 +30,18 @@ export class App {
     toolbarView.addClearHandler(this._clearAll.bind(this));
   }
 
-  _getPosition() {
-    if (!navigator.geolocation) return;
-
-    navigator.geolocation.getCurrentPosition(
-      this._showMap.bind(this),
-      function () {
-        alert('Could not get your position');
-      }
-    );
+  _showMap() {
+    mapView.loadMap(DEFAULT_COORDS, this._handleMapClick.bind(this));
+    this.#workouts.forEach(workout => mapView.renderMarker(workout));
   }
 
-  _showMap(position) {
-    const { latitude, longitude } = position.coords;
-
-    mapView.loadMap([latitude, longitude], this._handleMapClick.bind(this));
-    this.#workouts.forEach(workout => mapView.renderMarker(workout));
+  // Moves the map to the user's location if they allow it.
+  // If they don't, the map just stays at the default location.
+  _goToUserLocation() {
+    navigator.geolocation?.getCurrentPosition(position => {
+      const { latitude, longitude } = position.coords;
+      mapView.moveTo([latitude, longitude]);
+    });
   }
 
   _handleMapClick(mapEvent) {
@@ -86,8 +84,6 @@ export class App {
   }
 
   _goToWorkout(id) {
-    if (!mapView.isMapReady()) return;
-
     const workout = this.#workouts.find(work => work.id === id);
     mapView.moveTo(workout.coords);
   }
@@ -116,7 +112,6 @@ export class App {
   }
 
   _showAll() {
-    if (!mapView.isMapReady()) return;
     mapView.showAll(this.#workouts.map(work => work.coords));
   }
 

@@ -10,10 +10,6 @@ export function loadMap(coords, onMapClick) {
   map.on('click', onMapClick);
 }
 
-export function isMapReady() {
-  return Boolean(map);
-}
-
 export function renderMarker(workout) {
   const marker = L.marker(workout.coords)
     .addTo(map)
