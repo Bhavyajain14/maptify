@@ -5,12 +5,10 @@ const inputCadence = document.getElementById('cadence');
 const inputElevation = document.getElementById('elevation');
 const errorEl = document.querySelector('.entry-form__error');
 
+// Focus stays on the map, so the user can keep clicking to add points
 export function showForm() {
   showError('');
-  if (!form.classList.contains('is-hidden')) return;
-
   form.classList.remove('is-hidden');
-  inputDuration.focus();
 }
 
 export function setDistance(km) {
