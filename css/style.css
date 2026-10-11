@@ -50,9 +50,15 @@ a:visited {
 }
 
 .logo {
-  height: 5.2rem;
   align-self: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
+  font-size: 3.6rem;
+  font-weight: 800;
+  color: var(--color-brand--2);
+}
+
+.logo span {
+  color: var(--color-brand--1);
 }
 
 .toolbar {
