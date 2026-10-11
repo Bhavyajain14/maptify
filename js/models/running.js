@@ -7,7 +7,7 @@ export class Running extends Workout {
     super(route, distance, duration);
     this.cadence = cadence;
     this.calcPace();
-    this._setDescription();
+    this._setTitle();
   }
 
   calcPace() {

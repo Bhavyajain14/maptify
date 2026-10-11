@@ -11,8 +11,8 @@ export class Workout {
     this.duration = duration; // in min
   }
 
-  _setDescription() {
+  _setTitle() {
     const type = this.type[0].toUpperCase() + this.type.slice(1);
-    this.description = `${type} on ${MONTHS[this.date.getMonth()]} ${this.date.getDate()}`;
+    this.title = `${type} on ${MONTHS[this.date.getMonth()]} ${this.date.getDate()}`;
   }
 }

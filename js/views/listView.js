@@ -14,7 +14,7 @@ function workoutHtml(workout) {
 
   return `
     <li class="log-item log-item--${workout.type}" data-id="${workout.id}">
-      <h2 class="log-item__title">${workout.description}</h2>
+      <h2 class="log-item__title">${workout.title}</h2>
       <button type="button" class="log-item__delete" aria-label="Delete workout">&times;</button>
       ${detail(isRunning ? '🏃‍♂️' : '🚴‍♀️', workout.distance, 'km')}
       ${detail('⏱', workout.duration, 'min')}

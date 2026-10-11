@@ -38,7 +38,7 @@ export function renderWorkout(workout) {
       })
     )
     .setPopupContent(
-      `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.description}`
+      `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.title}`
     );
 
   const finish = L.circleMarker(workout.route.at(-1), {

@@ -19,7 +19,7 @@ function toWorkout(data) {
 
   workout.id = data.id;
   workout.date = new Date(data.date);
-  workout._setDescription();
+  workout._setTitle();
   return workout;
 }
 

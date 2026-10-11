@@ -7,7 +7,7 @@ export class Cycling extends Workout {
     super(route, distance, duration);
     this.elevationGain = elevationGain;
     this.calcSpeed();
-    this._setDescription();
+    this._setTitle();
   }
 
   calcSpeed() {
