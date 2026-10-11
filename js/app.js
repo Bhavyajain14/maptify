@@ -50,6 +50,11 @@ export class App {
 
   _handleMapClick(mapEvent) {
     const { lat, lng } = mapEvent.latlng;
+
+    // ignore a second click on the same spot (for example a double click)
+    const last = this.#route.at(-1);
+    if (last && last[0] === lat && last[1] === lng) return;
+
     this.#route.push([lat, lng]);
     this._updateDraft();
     formView.showForm();
