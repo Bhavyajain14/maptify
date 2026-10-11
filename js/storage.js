@@ -9,10 +9,13 @@ export function saveWorkouts(workouts) {
 // JSON only keeps plain data, so turn each saved item back into a
 // Running or Cycling object to get its methods back.
 function toWorkout(data) {
+  // older saves only had one point, called coords
+  const route = data.route ?? [data.coords];
+
   const workout =
     data.type === 'running'
-      ? new Running(data.coords, data.distance, data.duration, data.cadence)
-      : new Cycling(data.coords, data.distance, data.duration, data.elevationGain);
+      ? new Running(route, data.distance, data.duration, data.cadence)
+      : new Cycling(route, data.distance, data.duration, data.elevationGain);
 
   workout.id = data.id;
   workout.date = new Date(data.date);

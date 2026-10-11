@@ -5,8 +5,8 @@ export class Workout {
   date = new Date();
   id = crypto.randomUUID();
 
-  constructor(coords, distance, duration) {
-    this.coords = coords; // [lat, lng]
+  constructor(route, distance, duration) {
+    this.route = route; // list of [lat, lng] points
     this.distance = distance; // in km
     this.duration = duration; // in min
   }

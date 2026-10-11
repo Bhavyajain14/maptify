@@ -11,7 +11,7 @@ import * as summaryView from './views/summaryView.js';
 
 export class App {
   #workouts = [];
-  #clickedCoords; // where the user clicked on the map
+  #route = []; // points clicked on the map for the new workout
   #sortBy = 'newest';
 
   constructor() {
@@ -32,7 +32,7 @@ export class App {
 
   _showMap() {
     mapView.loadMap(DEFAULT_COORDS, this._handleMapClick.bind(this));
-    this.#workouts.forEach(workout => mapView.renderMarker(workout));
+    this.#workouts.forEach(workout => mapView.renderWorkout(workout));
   }
 
   // Moves the map to the user's location if they allow it.
@@ -46,7 +46,7 @@ export class App {
 
   _handleMapClick(mapEvent) {
     const { lat, lng } = mapEvent.latlng;
-    this.#clickedCoords = [lat, lng];
+    this.#route = [[lat, lng]];
     formView.showForm();
   }
 
@@ -62,7 +62,7 @@ export class App {
       )
         return formView.showError('Please enter positive numbers only.');
 
-      workout = new Running(this.#clickedCoords, distance, duration, cadence);
+      workout = new Running(this.#route, distance, duration, cadence);
     }
 
     if (type === 'cycling') {
@@ -73,11 +73,11 @@ export class App {
       )
         return formView.showError('Please enter positive numbers only.');
 
-      workout = new Cycling(this.#clickedCoords, distance, duration, elevation);
+      workout = new Cycling(this.#route, distance, duration, elevation);
     }
 
     this.#workouts.push(workout);
-    mapView.renderMarker(workout);
+    mapView.renderWorkout(workout);
     this._renderList();
     formView.hideForm();
     saveWorkouts(this.#workouts);
@@ -85,12 +85,12 @@ export class App {
 
   _goToWorkout(id) {
     const workout = this.#workouts.find(work => work.id === id);
-    mapView.moveTo(workout.coords);
+    mapView.showAll(workout.route);
   }
 
   _deleteWorkout(id) {
     this.#workouts = this.#workouts.filter(work => work.id !== id);
-    mapView.removeMarker(id);
+    mapView.removeWorkout(id);
     this._renderList();
     saveWorkouts(this.#workouts);
   }
@@ -112,14 +112,14 @@ export class App {
   }
 
   _showAll() {
-    mapView.showAll(this.#workouts.map(work => work.coords));
+    mapView.showAll(this.#workouts.flatMap(work => work.route));
   }
 
   _clearAll() {
     if (!this.#workouts.length) return;
     if (!confirm('Delete all workouts?')) return;
 
-    this.#workouts.forEach(work => mapView.removeMarker(work.id));
+    this.#workouts.forEach(work => mapView.removeWorkout(work.id));
     this.#workouts = [];
     this._renderList();
     saveWorkouts(this.#workouts);

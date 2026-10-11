@@ -3,8 +3,8 @@ import { Workout } from './workout.js';
 export class Running extends Workout {
   type = 'running';
 
-  constructor(coords, distance, duration, cadence) {
-    super(coords, distance, duration);
+  constructor(route, distance, duration, cadence) {
+    super(route, distance, duration);
     this.cadence = cadence;
     this.calcPace();
     this._setDescription();
