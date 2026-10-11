@@ -42,3 +42,8 @@ export function removeMarker(id) {
 export function moveTo(coords) {
   map.setView(coords, MAP_ZOOM, { animate: true, pan: { duration: 1 } });
 }
+
+export function showAll(coordsList) {
+  if (!coordsList.length) return;
+  map.fitBounds(L.latLngBounds(coordsList), { padding: [50, 50] });
+}

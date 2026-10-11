@@ -21,6 +21,7 @@ export class App {
       this._goToWorkout.bind(this),
       this._deleteWorkout.bind(this)
     );
+    toolbarView.addShowAllHandler(this._showAll.bind(this));
     toolbarView.addClearHandler(this._clearAll.bind(this));
   }
 
@@ -93,6 +94,11 @@ export class App {
     mapView.removeMarker(id);
     listView.removeWorkout(id);
     saveWorkouts(this.#workouts);
+  }
+
+  _showAll() {
+    if (!mapView.isMapReady()) return;
+    mapView.showAll(this.#workouts.map(work => work.coords));
   }
 
   _clearAll() {
