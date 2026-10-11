@@ -62,6 +62,10 @@ a:visited {
   margin-bottom: 1.5rem;
 }
 
+.toolbar__sort {
+  margin-right: auto;
+}
+
 .toolbar__btn,
 .toolbar__sort {
   font-family: inherit;

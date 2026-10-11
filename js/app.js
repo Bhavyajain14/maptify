@@ -10,10 +10,11 @@ import * as toolbarView from './views/toolbarView.js';
 export class App {
   #workouts = [];
   #clickedCoords; // where the user clicked on the map
+  #sortBy = 'newest';
 
   constructor() {
     this.#workouts = loadWorkouts();
-    this.#workouts.forEach(workout => listView.renderWorkout(workout));
+    this._renderList();
 
     this._getPosition();
     formView.addFormHandlers(this._newWorkout.bind(this));
@@ -21,6 +22,7 @@ export class App {
       this._goToWorkout.bind(this),
       this._deleteWorkout.bind(this)
     );
+    toolbarView.addSortHandler(this._sort.bind(this));
     toolbarView.addShowAllHandler(this._showAll.bind(this));
     toolbarView.addClearHandler(this._clearAll.bind(this));
   }
@@ -77,7 +79,7 @@ export class App {
 
     this.#workouts.push(workout);
     mapView.renderMarker(workout);
-    listView.renderWorkout(workout);
+    this._renderList();
     formView.hideForm();
     saveWorkouts(this.#workouts);
   }
@@ -94,6 +96,21 @@ export class App {
     mapView.removeMarker(id);
     listView.removeWorkout(id);
     saveWorkouts(this.#workouts);
+  }
+
+  _renderList() {
+    const workouts = [...this.#workouts];
+
+    if (this.#sortBy === 'distance') workouts.sort((a, b) => b.distance - a.distance);
+    else if (this.#sortBy === 'duration') workouts.sort((a, b) => b.duration - a.duration);
+    else workouts.reverse(); // newest first
+
+    listView.renderList(workouts);
+  }
+
+  _sort(sortBy) {
+    this.#sortBy = sortBy;
+    this._renderList();
   }
 
   _showAll() {

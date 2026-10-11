@@ -10,10 +10,10 @@ function detail(icon, value, unit) {
     </div>`;
 }
 
-export function renderWorkout(workout) {
+function workoutHtml(workout) {
   const isRunning = workout.type === 'running';
 
-  const html = `
+  return `
     <li class="workout workout--${workout.type}" data-id="${workout.id}">
       <h2 class="workout__title">${workout.description}</h2>
       <button class="workout__delete" title="Delete workout">&times;</button>
@@ -27,9 +27,12 @@ export function renderWorkout(workout) {
             detail('⛰', workout.elevationGain, 'm')
       }
     </li>`;
+}
 
-  // newest workout goes right below the form
-  form.insertAdjacentHTML('afterend', html);
+// Replaces the whole list, keeping the order of the array
+export function renderList(workouts) {
+  clearList();
+  form.insertAdjacentHTML('afterend', workouts.map(workoutHtml).join(''));
 }
 
 export function removeWorkout(id) {
