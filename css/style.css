@@ -206,6 +206,12 @@ select {
   background-color: var(--surface);
 }
 
+/* comes after :focus so the red wins while the field is focused */
+.field__input[aria-invalid='true'] {
+  border-color: var(--danger);
+  outline-color: var(--danger);
+}
+
 .entry-form__error {
   grid-column: 1 / -1;
   font-size: 13px;

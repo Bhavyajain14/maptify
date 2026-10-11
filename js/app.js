@@ -1,7 +1,7 @@
 import { Running } from './models/running.js';
 import { Cycling } from './models/cycling.js';
 import { DEFAULT_COORDS } from './config.js';
-import { allNumbers, allPositive, routeDistanceKm } from './helpers.js';
+import { routeDistanceKm } from './helpers.js';
 import { saveWorkouts, loadWorkouts } from './storage.js';
 import * as mapView from './views/mapView.js';
 import * as formView from './views/formView.js';
@@ -77,34 +77,31 @@ export class App {
     formView.hideForm();
   }
 
-  _newWorkout() {
+  // Returns what is wrong with the new workout (and which field), or nothing
+  _findError({ type, distance, duration, cadence }) {
     if (this.#route.length < 2)
-      return formView.showError('Click at least two points on the map to draw your route.');
+      return { message: 'Click at least two points on the map to draw your route.' };
+    if (!(distance > 0))
+      return { message: 'Your route is too short. Add a point further away.' };
+    if (!(duration > 0))
+      return { field: 'duration', message: 'Enter how long the workout took, in minutes.' };
+    if (type === 'running' && !(cadence > 0))
+      return { field: 'cadence', message: 'Enter your cadence in steps per minute.' };
+    // elevation gain is optional and can be 0 or negative (downhill)
+  }
 
-    const { type, duration, cadence, elevation } = formView.getFormData();
-    const distance = +routeDistanceKm(this.#route).toFixed(2);
-    let workout;
+  _newWorkout() {
+    const data = formView.getFormData();
+    data.distance = +routeDistanceKm(this.#route).toFixed(2);
 
-    if (type === 'running') {
-      if (
-        !allNumbers(distance, duration, cadence) ||
-        !allPositive(distance, duration, cadence)
-      )
-        return formView.showError('Please enter positive numbers only.');
+    const error = this._findError(data);
+    if (error) return formView.showError(error.message, error.field);
 
-      workout = new Running(this.#route, distance, duration, cadence);
-    }
-
-    if (type === 'cycling') {
-      // elevation gain can be negative (downhill)
-      if (
-        !allNumbers(distance, duration, elevation) ||
-        !allPositive(distance, duration)
-      )
-        return formView.showError('Please enter positive numbers only.');
-
-      workout = new Cycling(this.#route, distance, duration, elevation);
-    }
+    const { type, distance, duration, cadence, elevation } = data;
+    const workout =
+      type === 'running'
+        ? new Running(this.#route, distance, duration, cadence)
+        : new Cycling(this.#route, distance, duration, elevation);
 
     this.#workouts.push(workout);
     mapView.renderWorkout(workout);

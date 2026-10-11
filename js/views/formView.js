@@ -22,8 +22,15 @@ export function hideForm() {
   form.classList.add('is-hidden');
 }
 
-export function showError(message) {
+// Shows a message under the form and marks the field that needs fixing in red
+export function showError(message, fieldId) {
   errorEl.textContent = message;
+  form.querySelector('[aria-invalid]')?.removeAttribute('aria-invalid');
+  if (!fieldId) return;
+
+  const input = document.getElementById(fieldId);
+  input.setAttribute('aria-invalid', 'true');
+  input.focus();
 }
 
 export function getFormData() {
@@ -31,7 +38,7 @@ export function getFormData() {
     type: form.elements.type.value,
     duration: +inputDuration.value,
     cadence: +inputCadence.value,
-    elevation: +inputElevation.value,
+    elevation: +inputElevation.value, // empty counts as 0
   };
 }
 
@@ -47,6 +54,10 @@ export function addFormHandlers(onSubmit, onUndo, onCancel) {
 
   form.addEventListener('change', function (e) {
     if (e.target.name === 'type') showFieldsFor(e.target.value);
+  });
+  // typing in the red field clears the error
+  form.addEventListener('input', function (e) {
+    if (e.target.getAttribute('aria-invalid')) showError('');
   });
   form.addEventListener('submit', function (e) {
     e.preventDefault();
