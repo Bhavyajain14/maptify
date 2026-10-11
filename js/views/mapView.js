@@ -1,4 +1,5 @@
-import { MAP_ZOOM, TILE_URL, TILE_ATTRIBUTION } from '../config.js';
+import { MAP_ZOOM, TILE_URL, TILE_ATTRIBUTION, TYPE_LABELS } from '../config.js';
+import { escapeHtml } from '../helpers.js';
 
 // L is the global object from the Leaflet script in index.html
 let map;
@@ -38,7 +39,9 @@ export function renderWorkout(workout) {
       })
     )
     .setPopupContent(
-      `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.title}`
+      `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${
+        workout.description ? escapeHtml(workout.description) : TYPE_LABELS[workout.type]
+      }`
     );
 
   const finish = L.circleMarker(workout.route.at(-1), {

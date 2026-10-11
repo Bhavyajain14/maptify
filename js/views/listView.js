@@ -1,4 +1,5 @@
-import { escapeHtml } from '../helpers.js';
+import { TYPE_LABELS } from '../config.js';
+import { escapeHtml, formatDateTime } from '../helpers.js';
 
 const containerWorkouts = document.querySelector('.log');
 
@@ -16,10 +17,14 @@ function workoutHtml(workout) {
 
   return `
     <li class="log-item log-item--${workout.type}" data-id="${workout.id}">
-      <h2 class="log-item__title">${workout.title}</h2>
+      <div class="log-item__meta">
+        <span class="tag tag--${workout.type}">${TYPE_LABELS[workout.type]}</span>
+        <time datetime="${workout.date.toISOString()}">${formatDateTime(workout.date)}</time>
+        ${workout.editedAt ? '<span>· edited</span>' : ''}
+      </div>
       ${
         workout.description
-          ? `<p class="log-item__description">${escapeHtml(workout.description)}</p>`
+          ? `<h2 class="log-item__title">${escapeHtml(workout.description)}</h2>`
           : ''
       }
       <div class="log-item__actions">

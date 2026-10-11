@@ -7,6 +7,16 @@ export function escapeHtml(text) {
     .replaceAll('"', '&quot;');
 }
 
+// a Date -> "11 Oct, 6:42 pm"
+export function formatDateTime(date) {
+  return date.toLocaleString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+}
+
 // 135 -> "2 h 15 min"
 export function formatMinutes(totalMinutes) {
   const hours = Math.floor(totalMinutes / 60);

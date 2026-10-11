@@ -20,7 +20,7 @@ function toWorkout(data) {
   workout.id = data.id;
   workout.date = new Date(data.date);
   workout.description = data.description ?? '';
-  workout._setTitle();
+  workout.editedAt = data.editedAt ? new Date(data.editedAt) : null;
   return workout;
 }
 

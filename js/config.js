@@ -8,3 +8,5 @@ export const TILE_ATTRIBUTION =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 export const STORAGE_KEY = 'workouts';
+
+export const TYPE_LABELS = { running: 'Running', cycling: 'Cycling' };

@@ -133,7 +133,7 @@ export class App {
       // keep the original id and date, so it stays the same workout
       workout.id = this.#workouts[index].id;
       workout.date = this.#workouts[index].date;
-      workout._setTitle();
+      workout.editedAt = new Date();
       this.#workouts[index] = workout;
     }
 
