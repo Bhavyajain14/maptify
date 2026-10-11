@@ -3,7 +3,7 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 
 export class Workout {
   date = new Date();
-  id = (Date.now() + '').slice(-10);
+  id = crypto.randomUUID();
 
   constructor(coords, distance, duration) {
     this.coords = coords; // [lat, lng]
