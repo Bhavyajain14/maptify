@@ -16,11 +16,7 @@ export function hideForm() {
   inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value =
     '';
   showError('');
-
-  // hide straight away, without the slide animation
-  form.style.display = 'none';
   form.classList.add('is-hidden');
-  setTimeout(() => (form.style.display = 'grid'), 1000);
 }
 
 export function showError(message) {
