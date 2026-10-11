@@ -14,11 +14,20 @@ export function loadMap(coords, onMapClick) {
   map.on('click', onMapClick);
 }
 
-// Draws a saved workout: its route as a line, and a marker at the start
+// Draws a saved workout: its route as a line, with start and finish dots
 export function renderWorkout(workout) {
-  const line = L.polyline(workout.route, { color: COLORS[workout.type], weight: 5 });
+  const color = COLORS[workout.type];
+  const line = L.polyline(workout.route, { color, weight: 5 });
 
-  const marker = L.marker(workout.route[0])
+  // start: white dot with a colored ring, finish: colored dot with a white ring
+  const start = L.circleMarker(workout.route[0], {
+    radius: 8,
+    weight: 3,
+    color,
+    fillColor: '#fff',
+    fillOpacity: 1,
+  })
+    .bindTooltip('Start')
     .bindPopup(
       L.popup({
         maxWidth: 250,
@@ -32,8 +41,16 @@ export function renderWorkout(workout) {
       `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.description}`
     );
 
-  const layer = L.layerGroup([line, marker]).addTo(map);
-  marker.openPopup();
+  const finish = L.circleMarker(workout.route.at(-1), {
+    radius: 8,
+    weight: 3,
+    color: '#fff',
+    fillColor: color,
+    fillOpacity: 1,
+  }).bindTooltip('Finish');
+
+  const layer = L.layerGroup([line, start, finish]).addTo(map);
+  start.openPopup();
   workoutLayers.set(workout.id, layer);
 }
 
@@ -59,8 +76,14 @@ export function drawDraft(route) {
   draftLayer.clearLayers();
 
   L.polyline(route, { color: '#0f172a', weight: 4, dashArray: '6 8' }).addTo(draftLayer);
-  route.forEach(point =>
-    L.circleMarker(point, { radius: 5, color: '#0f172a' }).addTo(draftLayer)
+  // the first point is white, so you can see where the route starts
+  route.forEach((point, i) =>
+    L.circleMarker(point, {
+      radius: 5,
+      color: '#0f172a',
+      fillColor: i === 0 ? '#fff' : '#0f172a',
+      fillOpacity: 1,
+    }).addTo(draftLayer)
   );
 }
 
