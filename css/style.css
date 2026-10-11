@@ -55,7 +55,7 @@ select {
   gap: 16px;
   padding: 24px;
   background-color: var(--bg);
-  border-right: 1px solid var(--border);
+  border-left: 1px solid var(--border);
 }
 
 .brand {
@@ -315,7 +315,7 @@ select {
   border-left-color: var(--ride);
 }
 
-/* SMALL SCREENS: list on top, map below */
+/* SMALL SCREENS: map on top, list below */
 @media (max-width: 700px) {
   body {
     flex-direction: column;
@@ -324,7 +324,7 @@ select {
   .panel {
     width: 100%;
     height: 50vh;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
+    border-left: none;
+    border-top: 1px solid var(--border);
   }
 }
