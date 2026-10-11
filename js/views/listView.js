@@ -16,6 +16,7 @@ export function renderWorkout(workout) {
   const html = `
     <li class="workout workout--${workout.type}" data-id="${workout.id}">
       <h2 class="workout__title">${workout.description}</h2>
+      <button class="workout__delete" title="Delete workout">&times;</button>
       ${detail(isRunning ? '🏃‍♂️' : '🚴‍♀️', workout.distance, 'km')}
       ${detail('⏱', workout.duration, 'min')}
       ${
@@ -31,10 +32,16 @@ export function renderWorkout(workout) {
   form.insertAdjacentHTML('afterend', html);
 }
 
-export function addListClickHandler(onWorkoutClick) {
+export function removeWorkout(id) {
+  containerWorkouts.querySelector(`[data-id="${id}"]`)?.remove();
+}
+
+export function addListClickHandler(onWorkoutClick, onDeleteClick) {
   containerWorkouts.addEventListener('click', function (e) {
     const workoutEl = e.target.closest('.workout');
     if (!workoutEl) return;
-    onWorkoutClick(workoutEl.dataset.id);
+
+    if (e.target.closest('.workout__delete')) onDeleteClick(workoutEl.dataset.id);
+    else onWorkoutClick(workoutEl.dataset.id);
   });
 }

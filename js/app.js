@@ -16,7 +16,10 @@ export class App {
 
     this._getPosition();
     formView.addFormHandlers(this._newWorkout.bind(this));
-    listView.addListClickHandler(this._goToWorkout.bind(this));
+    listView.addListClickHandler(
+      this._goToWorkout.bind(this),
+      this._deleteWorkout.bind(this)
+    );
   }
 
   _getPosition() {
@@ -81,5 +84,12 @@ export class App {
 
     const workout = this.#workouts.find(work => work.id === id);
     mapView.moveTo(workout.coords);
+  }
+
+  _deleteWorkout(id) {
+    this.#workouts = this.#workouts.filter(work => work.id !== id);
+    mapView.removeMarker(id);
+    listView.removeWorkout(id);
+    saveWorkouts(this.#workouts);
   }
 }

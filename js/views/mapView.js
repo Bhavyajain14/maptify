@@ -2,6 +2,7 @@ import { MAP_ZOOM, TILE_URL, TILE_ATTRIBUTION } from '../config.js';
 
 // L is the global object from the Leaflet script in index.html
 let map;
+const markers = new Map(); // workout id -> marker
 
 export function loadMap(coords, onMapClick) {
   map = L.map('map').setView(coords, MAP_ZOOM);
@@ -14,7 +15,7 @@ export function isMapReady() {
 }
 
 export function renderMarker(workout) {
-  L.marker(workout.coords)
+  const marker = L.marker(workout.coords)
     .addTo(map)
     .bindPopup(
       L.popup({
@@ -29,6 +30,13 @@ export function renderMarker(workout) {
       `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.description}`
     )
     .openPopup();
+
+  markers.set(workout.id, marker);
+}
+
+export function removeMarker(id) {
+  markers.get(id)?.remove();
+  markers.delete(id);
 }
 
 export function moveTo(coords) {
