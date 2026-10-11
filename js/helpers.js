@@ -41,6 +41,7 @@ function distanceKm([lat1, lng1], [lat2, lng2]) {
 // Total length in km of a route made of [lat, lng] points
 export function routeDistanceKm(route) {
   let total = 0;
-  for (let i = 1; i < route.length; i++) total += distanceKm(route[i - 1], route[i]);
+  for (let i = 1; i < route.length; i++)
+    total += distanceKm(route[i - 1], route[i]);
   return total;
 }

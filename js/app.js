@@ -24,12 +24,12 @@ export class App {
     formView.addFormHandlers(
       this._saveWorkout.bind(this),
       this._undoPoint.bind(this),
-      this._cancelRoute.bind(this)
+      this._cancelRoute.bind(this),
     );
     listView.addListClickHandler(
       this._goToWorkout.bind(this),
       this._editWorkout.bind(this),
-      this._deleteWorkout.bind(this)
+      this._deleteWorkout.bind(this),
     );
     toolbarView.addSortHandler(this._sort.bind(this));
     toolbarView.addShowAllHandler(this._showAll.bind(this));
@@ -101,13 +101,21 @@ export class App {
   // Returns what is wrong with the new workout (and which field), or nothing
   _findError({ type, distance, duration, cadence }) {
     if (this.#route.length < 2)
-      return { message: 'Click at least two points on the map to draw your route.' };
+      return {
+        message: 'Click at least two points on the map to draw your route.',
+      };
     if (!(distance > 0))
       return { message: 'Your route is too short. Add a point further away.' };
     if (!(duration > 0))
-      return { field: 'duration', message: 'Enter how long the workout took, in minutes.' };
+      return {
+        field: 'duration',
+        message: 'Enter how long the workout took, in minutes.',
+      };
     if (type === 'running' && !(cadence > 0))
-      return { field: 'cadence', message: 'Enter your cadence in steps per minute.' };
+      return {
+        field: 'cadence',
+        message: 'Enter your cadence in steps per minute.',
+      };
     // elevation gain is optional and can be 0 or negative (downhill)
   }
 
@@ -164,8 +172,10 @@ export class App {
   _renderList() {
     const workouts = [...this.#workouts];
 
-    if (this.#sortBy === 'distance') workouts.sort((a, b) => b.distance - a.distance);
-    else if (this.#sortBy === 'duration') workouts.sort((a, b) => b.duration - a.duration);
+    if (this.#sortBy === 'distance')
+      workouts.sort((a, b) => b.distance - a.distance);
+    else if (this.#sortBy === 'duration')
+      workouts.sort((a, b) => b.duration - a.duration);
     else workouts.reverse(); // newest first
 
     listView.renderList(workouts);

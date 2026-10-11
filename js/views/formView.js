@@ -30,8 +30,11 @@ export function setDistance(km) {
 }
 
 export function hideForm() {
-  inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value =
-    '';
+  inputDistance.value =
+    inputDuration.value =
+    inputCadence.value =
+    inputElevation.value =
+      '';
   inputDescription.value = '';
   showError('');
   form.classList.add('is-hidden');
@@ -60,8 +63,12 @@ export function getFormData() {
 
 // Running needs cadence, cycling needs elevation gain
 function showFieldsFor(type) {
-  inputCadence.closest('.field').classList.toggle('field--hidden', type !== 'running');
-  inputElevation.closest('.field').classList.toggle('field--hidden', type !== 'cycling');
+  inputCadence
+    .closest('.field')
+    .classList.toggle('field--hidden', type !== 'running');
+  inputElevation
+    .closest('.field')
+    .classList.toggle('field--hidden', type !== 'cycling');
 }
 
 export function addFormHandlers(onSubmit, onUndo, onCancel) {

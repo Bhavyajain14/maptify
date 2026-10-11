@@ -48,7 +48,11 @@ export function renderList(workouts) {
   containerWorkouts.innerHTML = workouts.map(workoutHtml).join('');
 }
 
-export function addListClickHandler(onWorkoutClick, onEditClick, onDeleteClick) {
+export function addListClickHandler(
+  onWorkoutClick,
+  onEditClick,
+  onDeleteClick,
+) {
   containerWorkouts.addEventListener('click', function (e) {
     const workoutEl = e.target.closest('.log-item');
     if (!workoutEl) return;

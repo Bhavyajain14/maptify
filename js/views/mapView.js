@@ -1,4 +1,9 @@
-import { MAP_ZOOM, TILE_URL, TILE_ATTRIBUTION, TYPE_LABELS } from '../config.js';
+import {
+  MAP_ZOOM,
+  TILE_URL,
+  TILE_ATTRIBUTION,
+  TYPE_LABELS,
+} from '../config.js';
 import { escapeHtml } from '../helpers.js';
 
 // L is the global object from the Leaflet script in index.html
@@ -36,12 +41,14 @@ export function renderWorkout(workout) {
         autoClose: false,
         closeOnClick: false,
         className: `popup--${workout.type}`,
-      })
+      }),
     )
     .setPopupContent(
       `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${
-        workout.description ? escapeHtml(workout.description) : TYPE_LABELS[workout.type]
-      }`
+        workout.description
+          ? escapeHtml(workout.description)
+          : TYPE_LABELS[workout.type]
+      }`,
     );
 
   const finish = L.circleMarker(workout.route.at(-1), {
@@ -78,7 +85,9 @@ export function drawDraft(route) {
   draftLayer ??= L.layerGroup().addTo(map);
   draftLayer.clearLayers();
 
-  L.polyline(route, { color: '#0f172a', weight: 4, dashArray: '6 8' }).addTo(draftLayer);
+  L.polyline(route, { color: '#0f172a', weight: 4, dashArray: '6 8' }).addTo(
+    draftLayer,
+  );
   // the first point is white, so you can see where the route starts
   route.forEach((point, i) =>
     L.circleMarker(point, {
@@ -86,7 +95,7 @@ export function drawDraft(route) {
       color: '#0f172a',
       fillColor: i === 0 ? '#fff' : '#0f172a',
       fillOpacity: 1,
-    }).addTo(draftLayer)
+    }).addTo(draftLayer),
   );
 }
 
