@@ -1,6 +1,6 @@
 import { formatMinutes } from '../helpers.js';
 
-const summaryEl = document.querySelector('.summary');
+const summaryEl = document.querySelector('.stats');
 
 export function renderSummary(workouts) {
   if (!workouts.length) {

@@ -1,6 +1,6 @@
-const sortSelect = document.querySelector('.toolbar__sort');
-const btnFit = document.querySelector('.toolbar__btn--fit');
-const btnClear = document.querySelector('.toolbar__btn--clear');
+const sortSelect = document.querySelector('.controls__select');
+const btnFit = document.querySelector('.controls__button--fit');
+const btnClear = document.querySelector('.controls__button--clear');
 
 export function addClearHandler(onClear) {
   btnClear.addEventListener('click', onClear);

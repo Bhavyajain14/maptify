@@ -1,11 +1,11 @@
-const containerWorkouts = document.querySelector('.workouts');
+const containerWorkouts = document.querySelector('.log');
 
 function detail(icon, value, unit) {
   return `
-    <div class="workout__details">
-      <span class="workout__icon">${icon}</span>
-      <span class="workout__value">${value}</span>
-      <span class="workout__unit">${unit}</span>
+    <div class="stat">
+      <span class="stat__icon">${icon}</span>
+      <span class="stat__value">${value}</span>
+      <span class="stat__unit">${unit}</span>
     </div>`;
 }
 
@@ -13,9 +13,9 @@ function workoutHtml(workout) {
   const isRunning = workout.type === 'running';
 
   return `
-    <li class="workout workout--${workout.type}" data-id="${workout.id}">
-      <h2 class="workout__title">${workout.description}</h2>
-      <button type="button" class="workout__delete" aria-label="Delete workout">&times;</button>
+    <li class="log-item log-item--${workout.type}" data-id="${workout.id}">
+      <h2 class="log-item__title">${workout.description}</h2>
+      <button type="button" class="log-item__delete" aria-label="Delete workout">&times;</button>
       ${detail(isRunning ? '🏃‍♂️' : '🚴‍♀️', workout.distance, 'km')}
       ${detail('⏱', workout.duration, 'min')}
       ${
@@ -35,10 +35,10 @@ export function renderList(workouts) {
 
 export function addListClickHandler(onWorkoutClick, onDeleteClick) {
   containerWorkouts.addEventListener('click', function (e) {
-    const workoutEl = e.target.closest('.workout');
+    const workoutEl = e.target.closest('.log-item');
     if (!workoutEl) return;
 
-    if (e.target.closest('.workout__delete')) onDeleteClick(workoutEl.dataset.id);
+    if (e.target.closest('.log-item__delete')) onDeleteClick(workoutEl.dataset.id);
     else onWorkoutClick(workoutEl.dataset.id);
   });
 }

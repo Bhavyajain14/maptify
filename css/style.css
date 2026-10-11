@@ -50,7 +50,7 @@ a:visited {
 }
 
 /* SIDEBAR */
-.sidebar {
+.panel {
   flex-basis: 50rem;
   background-color: var(--color-dark--1);
   padding: 3rem 5rem 4rem 5rem;
@@ -58,7 +58,7 @@ a:visited {
   flex-direction: column;
 }
 
-.logo {
+.brand {
   align-self: center;
   margin-bottom: 3rem;
   font-size: 3.6rem;
@@ -66,23 +66,23 @@ a:visited {
   color: var(--color-brand--2);
 }
 
-.logo span {
+.brand span {
   color: var(--color-brand--1);
 }
 
-.toolbar {
+.controls {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
-.toolbar__sort {
+.controls__select {
   margin-right: auto;
 }
 
-.toolbar__btn,
-.toolbar__sort {
+.controls__button,
+.controls__select {
   font-family: inherit;
   font-size: 1.3rem;
   padding: 0.5rem 1.2rem;
@@ -93,22 +93,22 @@ a:visited {
   cursor: pointer;
 }
 
-.toolbar__btn:hover {
+.controls__button:hover {
   background-color: var(--color-light--1);
   color: var(--color-dark--1);
 }
 
-.summary {
+.stats {
   font-size: 1.4rem;
   color: var(--color-light--1);
   margin-bottom: 1.5rem;
 }
 
-.summary:empty {
+.stats:empty {
   display: none;
 }
 
-.workouts {
+.log {
   list-style: none;
   flex: 1;
   min-height: 0;
@@ -116,11 +116,11 @@ a:visited {
   overflow-x: hidden;
 }
 
-.workouts::-webkit-scrollbar {
+.log::-webkit-scrollbar {
   width: 0;
 }
 
-.workout {
+.log-item {
   background-color: var(--color-dark--2);
   border-radius: 5px;
   padding: 1.5rem 2.25rem;
@@ -132,20 +132,20 @@ a:visited {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 0.75rem 1.5rem;
 }
-.workout--running {
+.log-item--running {
   border-left: 5px solid var(--color-brand--2);
 }
-.workout--cycling {
+.log-item--cycling {
   border-left: 5px solid var(--color-brand--1);
 }
 
-.workout__title {
+.log-item__title {
   font-size: 1.7rem;
   font-weight: 600;
   grid-column: 1 / -1;
 }
 
-.workout__delete {
+.log-item__delete {
   position: absolute;
   top: 0.8rem;
   right: 1.2rem;
@@ -157,34 +157,34 @@ a:visited {
   cursor: pointer;
 }
 
-.workout__delete:hover {
+.log-item__delete:hover {
   color: var(--color-light--2);
 }
 
-.workout__details {
+.stat {
   display: flex;
   align-items: baseline;
 }
 
-.workout__icon {
+.stat__icon {
   font-size: 1.8rem;
   margin-right: 0.2rem;
   height: 0.28rem;
 }
 
-.workout__value {
+.stat__value {
   font-size: 1.5rem;
   margin-right: 0.5rem;
 }
 
-.workout__unit {
+.stat__unit {
   font-size: 1.1rem;
   color: var(--color-light--1);
   text-transform: uppercase;
   font-weight: 800;
 }
 
-.form {
+.entry-form {
   background-color: var(--color-dark--2);
   border-radius: 5px;
   padding: 1.5rem 2.75rem;
@@ -199,7 +199,7 @@ a:visited {
   transition: all 0.5s, transform 1ms;
 }
 
-.form.hidden {
+.entry-form.is-hidden {
   transform: translateY(-30rem);
   height: 0;
   min-height: 0;
@@ -208,22 +208,22 @@ a:visited {
   opacity: 0;
 }
 
-.form__row {
+.field {
   display: flex;
   align-items: center;
 }
 
-.form__row--hidden {
+.field--hidden {
   display: none;
 }
 
-.form__label {
+.field__label {
   flex: 0 0 50%;
   font-size: 1.5rem;
   font-weight: 600;
 }
 
-.form__input {
+.field__input {
   width: 100%;
   padding: 0.3rem 1.1rem;
   font-family: inherit;
@@ -234,22 +234,22 @@ a:visited {
   transition: all 0.2s;
 }
 
-.form__input:focus {
+.field__input:focus {
   outline: none;
   background-color: #fff;
 }
 
-.form__btn {
+.entry-form__submit {
   display: none;
 }
 
-.form__error {
+.entry-form__error {
   grid-column: 1 / -1;
   font-size: 1.3rem;
   color: #ff8a80;
 }
 
-.form__error:empty {
+.entry-form__error:empty {
   display: none;
 }
 
@@ -279,9 +279,9 @@ a:visited {
   background-color: var(--color-dark--1);
 }
 
-.running-popup .leaflet-popup-content-wrapper {
+.popup--running .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--2);
 }
-.cycling-popup .leaflet-popup-content-wrapper {
+.popup--cycling .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
 }

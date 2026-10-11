@@ -1,14 +1,14 @@
-const form = document.querySelector('.form');
-const inputType = document.querySelector('.form__input--type');
-const inputDistance = document.querySelector('.form__input--distance');
-const inputDuration = document.querySelector('.form__input--duration');
-const inputCadence = document.querySelector('.form__input--cadence');
-const inputElevation = document.querySelector('.form__input--elevation');
-const errorEl = document.querySelector('.form__error');
+const form = document.querySelector('.entry-form');
+const inputType = document.getElementById('type');
+const inputDistance = document.getElementById('distance');
+const inputDuration = document.getElementById('duration');
+const inputCadence = document.getElementById('cadence');
+const inputElevation = document.getElementById('elevation');
+const errorEl = document.querySelector('.entry-form__error');
 
 export function showForm() {
   showError('');
-  form.classList.remove('hidden');
+  form.classList.remove('is-hidden');
   inputDistance.focus();
 }
 
@@ -19,7 +19,7 @@ export function hideForm() {
 
   // hide straight away, without the slide animation
   form.style.display = 'none';
-  form.classList.add('hidden');
+  form.classList.add('is-hidden');
   setTimeout(() => (form.style.display = 'grid'), 1000);
 }
 
@@ -38,8 +38,8 @@ export function getFormData() {
 }
 
 function toggleElevationField() {
-  inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
-  inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+  inputElevation.closest('.field').classList.toggle('field--hidden');
+  inputCadence.closest('.field').classList.toggle('field--hidden');
 }
 
 export function addFormHandlers(onSubmit) {

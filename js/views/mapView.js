@@ -23,7 +23,7 @@ export function renderMarker(workout) {
         minWidth: 100,
         autoClose: false,
         closeOnClick: false,
-        className: `${workout.type}-popup`,
+        className: `popup--${workout.type}`,
       })
     )
     .setPopupContent(
