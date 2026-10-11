@@ -35,6 +35,15 @@ body {
 }
 
 /* GENERAL */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 a:link,
 a:visited {
   color: var(--color-brand--1);
@@ -101,7 +110,8 @@ a:visited {
 
 .workouts {
   list-style: none;
-  height: 77vh;
+  flex: 1;
+  min-height: 0;
   overflow-y: scroll;
   overflow-x: hidden;
 }

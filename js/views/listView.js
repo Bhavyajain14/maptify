@@ -1,4 +1,3 @@
-const form = document.querySelector('.form');
 const containerWorkouts = document.querySelector('.workouts');
 
 function detail(icon, value, unit) {
@@ -16,7 +15,7 @@ function workoutHtml(workout) {
   return `
     <li class="workout workout--${workout.type}" data-id="${workout.id}">
       <h2 class="workout__title">${workout.description}</h2>
-      <button class="workout__delete" title="Delete workout">&times;</button>
+      <button type="button" class="workout__delete" aria-label="Delete workout">&times;</button>
       ${detail(isRunning ? '🏃‍♂️' : '🚴‍♀️', workout.distance, 'km')}
       ${detail('⏱', workout.duration, 'min')}
       ${
@@ -31,12 +30,7 @@ function workoutHtml(workout) {
 
 // Replaces the whole list, keeping the order of the array
 export function renderList(workouts) {
-  clearList();
-  form.insertAdjacentHTML('afterend', workouts.map(workoutHtml).join(''));
-}
-
-function clearList() {
-  containerWorkouts.querySelectorAll('.workout').forEach(el => el.remove());
+  containerWorkouts.innerHTML = workouts.map(workoutHtml).join('');
 }
 
 export function addListClickHandler(onWorkoutClick, onDeleteClick) {

@@ -33,62 +33,55 @@
     <title>Trailmark | Log your runs and rides on a map</title>
   </head>
   <body>
-    <div class="sidebar">
-      <h1 class="logo">Trail<span>mark</span></h1>
+    <aside class="sidebar">
+      <header>
+        <h1 class="logo">Trail<span>mark</span></h1>
+      </header>
 
-      <div class="toolbar">
-        <select class="toolbar__sort">
+      <nav class="toolbar" aria-label="Workout list options">
+        <label for="sort" class="visually-hidden">Sort workouts</label>
+        <select id="sort" class="toolbar__sort">
           <option value="newest">Newest first</option>
           <option value="distance">Longest distance</option>
           <option value="duration">Longest duration</option>
         </select>
-        <button class="toolbar__btn toolbar__btn--fit">Show all</button>
-        <button class="toolbar__btn toolbar__btn--clear">Clear all</button>
-      </div>
+        <button type="button" class="toolbar__btn toolbar__btn--fit">Show all</button>
+        <button type="button" class="toolbar__btn toolbar__btn--clear">Clear all</button>
+      </nav>
 
-      <p class="summary"></p>
+      <p class="summary" aria-live="polite"></p>
 
-      <ul class="workouts">
-        <form class="form hidden">
-          <div class="form__row">
-            <label class="form__label">Type</label>
-            <select class="form__input form__input--type">
-              <option value="running">Running</option>
-              <option value="cycling">Cycling</option>
-            </select>
-          </div>
-          <div class="form__row">
-            <label class="form__label">Distance</label>
-            <input class="form__input form__input--distance" placeholder="km" />
-          </div>
-          <div class="form__row">
-            <label class="form__label">Duration</label>
-            <input
-              class="form__input form__input--duration"
-              placeholder="min"
-            />
-          </div>
+      <form class="form hidden" aria-label="New workout">
+        <div class="form__row">
+          <label for="type" class="form__label">Type</label>
+          <select id="type" class="form__input form__input--type">
+            <option value="running">Running</option>
+            <option value="cycling">Cycling</option>
+          </select>
+        </div>
+        <div class="form__row">
+          <label for="distance" class="form__label">Distance</label>
+          <input id="distance" type="number" step="any" class="form__input form__input--distance" placeholder="km" />
+        </div>
+        <div class="form__row">
+          <label for="duration" class="form__label">Duration</label>
+          <input id="duration" type="number" step="any" class="form__input form__input--duration" placeholder="min" />
+        </div>
+        <div class="form__row">
+          <label for="cadence" class="form__label">Cadence</label>
+          <input id="cadence" type="number" step="any" class="form__input form__input--cadence" placeholder="steps/min" />
+        </div>
+        <div class="form__row form__row--hidden">
+          <label for="elevation" class="form__label">Elev. gain</label>
+          <input id="elevation" type="number" step="any" class="form__input form__input--elevation" placeholder="meters" />
+        </div>
+        <p class="form__error" role="alert"></p>
+        <button class="form__btn">Save</button>
+      </form>
 
-          <div class="form__row">
-            <label class="form__label">Cadence</label>
-            <input
-              class="form__input form__input--cadence"
-              placeholder="step/min"
-            />
-          </div>
-          <div class="form__row form__row--hidden">
-            <label class="form__label">Elev Gain</label>
-            <input
-              class="form__input form__input--elevation"
-              placeholder="meters"
-            />
-          </div>
-          <p class="form__error"></p>
-          <button class="form__btn">OK</button>
-        </form>
-      </ul>
-    </div>
+      <ul class="workouts" aria-label="Workouts"></ul>
+    </aside>
 
-    <div id="map"></div>
+    <main id="map" aria-label="Map"></main>
   </body>
 </html>
