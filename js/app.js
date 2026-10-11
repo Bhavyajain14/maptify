@@ -1,7 +1,7 @@
 import { Running } from './models/running.js';
 import { Cycling } from './models/cycling.js';
 import { DEFAULT_COORDS } from './config.js';
-import { allNumbers, allPositive } from './helpers.js';
+import { allNumbers, allPositive, routeDistanceKm } from './helpers.js';
 import { saveWorkouts, loadWorkouts } from './storage.js';
 import * as mapView from './views/mapView.js';
 import * as formView from './views/formView.js';
@@ -20,7 +20,11 @@ export class App {
 
     this._showMap();
     this._goToUserLocation();
-    formView.addFormHandlers(this._newWorkout.bind(this));
+    formView.addFormHandlers(
+      this._newWorkout.bind(this),
+      this._undoPoint.bind(this),
+      this._cancelRoute.bind(this)
+    );
     listView.addListClickHandler(
       this._goToWorkout.bind(this),
       this._deleteWorkout.bind(this)
@@ -46,13 +50,34 @@ export class App {
 
   _handleMapClick(mapEvent) {
     const { lat, lng } = mapEvent.latlng;
-    this.#route = [[lat, lng]];
+    this.#route.push([lat, lng]);
+    this._updateDraft();
     formView.showForm();
   }
 
+  _updateDraft() {
+    mapView.drawDraft(this.#route);
+    formView.setDistance(routeDistanceKm(this.#route));
+  }
+
+  _undoPoint() {
+    this.#route.pop();
+    if (!this.#route.length) return this._cancelRoute();
+    this._updateDraft();
+  }
+
+  _cancelRoute() {
+    this.#route = [];
+    mapView.clearDraft();
+    formView.hideForm();
+  }
+
   _newWorkout() {
-    const { type, distance, duration, cadence, elevation } =
-      formView.getFormData();
+    if (this.#route.length < 2)
+      return formView.showError('Click at least two points on the map to draw your route.');
+
+    const { type, duration, cadence, elevation } = formView.getFormData();
+    const distance = +routeDistanceKm(this.#route).toFixed(2);
     let workout;
 
     if (type === 'running') {
@@ -79,8 +104,8 @@ export class App {
     this.#workouts.push(workout);
     mapView.renderWorkout(workout);
     this._renderList();
-    formView.hideForm();
     saveWorkouts(this.#workouts);
+    this._cancelRoute(); // clears the drawing and hides the form
   }
 
   _goToWorkout(id) {

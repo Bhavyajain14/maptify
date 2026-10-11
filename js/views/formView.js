@@ -7,8 +7,14 @@ const errorEl = document.querySelector('.entry-form__error');
 
 export function showForm() {
   showError('');
+  if (!form.classList.contains('is-hidden')) return;
+
   form.classList.remove('is-hidden');
-  inputDistance.focus();
+  inputDuration.focus();
+}
+
+export function setDistance(km) {
+  inputDistance.value = `${km.toFixed(2)} km`;
 }
 
 export function hideForm() {
@@ -25,7 +31,6 @@ export function showError(message) {
 export function getFormData() {
   return {
     type: form.elements.type.value,
-    distance: +inputDistance.value,
     duration: +inputDuration.value,
     cadence: +inputCadence.value,
     elevation: +inputElevation.value,
@@ -38,7 +43,10 @@ function showFieldsFor(type) {
   inputElevation.closest('.field').classList.toggle('field--hidden', type !== 'cycling');
 }
 
-export function addFormHandlers(onSubmit) {
+export function addFormHandlers(onSubmit, onUndo, onCancel) {
+  form.querySelector('.entry-form__undo').addEventListener('click', onUndo);
+  form.querySelector('.entry-form__cancel').addEventListener('click', onCancel);
+
   form.addEventListener('change', function (e) {
     if (e.target.name === 'type') showFieldsFor(e.target.value);
   });

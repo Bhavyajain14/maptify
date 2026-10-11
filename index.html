@@ -51,7 +51,7 @@
         <button type="button" class="controls__button controls__button--clear">Clear all</button>
       </nav>
 
-      <p class="hint">Click anywhere on the map to add a workout.</p>
+      <p class="hint">Click on the map to draw your route. Each click adds a point.</p>
       <p class="stats" aria-live="polite"></p>
 
       <form class="entry-form is-hidden" aria-label="New workout">
@@ -69,8 +69,8 @@
           </div>
         </fieldset>
         <div class="field">
-          <label for="distance" class="field__label">Distance</label>
-          <input id="distance" type="number" step="any" class="field__input" placeholder="km" />
+          <label for="distance" class="field__label">Distance (from route)</label>
+          <input id="distance" class="field__input" placeholder="km" readonly />
         </div>
         <div class="field">
           <label for="duration" class="field__label">Duration</label>
@@ -85,7 +85,11 @@
           <input id="elevation" type="number" step="any" class="field__input" placeholder="meters" />
         </div>
         <p class="entry-form__error" role="alert"></p>
-        <button class="entry-form__submit">Save</button>
+        <div class="entry-form__actions">
+          <button type="button" class="entry-form__undo">Undo point</button>
+          <button type="button" class="entry-form__cancel">Cancel</button>
+          <button class="entry-form__submit">Save</button>
+        </div>
       </form>
 
       <ul class="log" aria-label="Workouts"></ul>
