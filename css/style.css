@@ -99,6 +99,14 @@ select {
   border-color: var(--danger);
 }
 
+.hint {
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--run);
+  background-color: #ccfbf1;
+  border-radius: 6px;
+}
+
 .stats {
   font-size: 13px;
   color: var(--muted);
