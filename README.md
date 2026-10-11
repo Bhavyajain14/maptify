@@ -1,5 +1,7 @@
 # Trailmark
 
+**Live:** https://bhavyajain14.github.io/trailmark/
+
 Log your runs and bike rides on a map. Draw your route by clicking on the map, Trailmark measures the distance, and you add the time. It keeps a list of your workouts with pace, speed and totals.
 
 Built with plain JavaScript (ES modules) and the Leaflet map library. No framework, no build step.
