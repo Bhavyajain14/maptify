@@ -9,7 +9,10 @@ Built with plain JavaScript (ES modules) and the Leaflet map library. No framewo
 - Opens the map at your current location (or New Delhi if location is off)
 - **Draw your route:** each click on the map adds a point, and the distance is calculated from the route. Undo the last point or cancel the route at any time.
 - Log a **running** workout (duration, cadence → pace) or a **cycling** workout (duration, elevation gain → speed)
-- Saved routes are drawn as lines (teal for runs, orange for rides), and clicking a workout in the list zooms to its route
+- Add an optional description, shown as the workout's heading. Each workout also shows a Running or Cycling tag and when it was logged.
+- **Edit** a saved workout: change any detail, or add and undo points on its route
+- Saved routes are drawn as lines with start and finish dots (teal for runs, orange for rides), and clicking a workout in the list zooms to its route
+- Missing details are pointed out in the form, with the field marked in red
 - Sort the list by newest, longest distance or longest duration
 - **Show all** zooms the map to fit every workout
 - Delete one workout or clear all of them
