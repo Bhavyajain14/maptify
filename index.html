@@ -53,13 +53,19 @@
       <p class="stats" aria-live="polite"></p>
 
       <form class="entry-form is-hidden" aria-label="New workout">
-        <div class="field">
-          <label for="type" class="field__label">Type</label>
-          <select id="type" class="field__input">
-            <option value="running">Running</option>
-            <option value="cycling">Cycling</option>
-          </select>
-        </div>
+        <fieldset class="field type-toggle">
+          <legend class="field__label">Type</legend>
+          <div class="type-toggle__options">
+            <label class="type-toggle__option">
+              <input type="radio" name="type" value="running" checked />
+              Running
+            </label>
+            <label class="type-toggle__option">
+              <input type="radio" name="type" value="cycling" />
+              Cycling
+            </label>
+          </div>
+        </fieldset>
         <div class="field">
           <label for="distance" class="field__label">Distance</label>
           <input id="distance" type="number" step="any" class="field__input" placeholder="km" />

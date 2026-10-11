@@ -1,5 +1,4 @@
 const form = document.querySelector('.entry-form');
-const inputType = document.getElementById('type');
 const inputDistance = document.getElementById('distance');
 const inputDuration = document.getElementById('duration');
 const inputCadence = document.getElementById('cadence');
@@ -25,7 +24,7 @@ export function showError(message) {
 
 export function getFormData() {
   return {
-    type: inputType.value,
+    type: form.elements.type.value,
     distance: +inputDistance.value,
     duration: +inputDuration.value,
     cadence: +inputCadence.value,
@@ -33,13 +32,16 @@ export function getFormData() {
   };
 }
 
-function toggleElevationField() {
-  inputElevation.closest('.field').classList.toggle('field--hidden');
-  inputCadence.closest('.field').classList.toggle('field--hidden');
+// Running needs cadence, cycling needs elevation gain
+function showFieldsFor(type) {
+  inputCadence.closest('.field').classList.toggle('field--hidden', type !== 'running');
+  inputElevation.closest('.field').classList.toggle('field--hidden', type !== 'cycling');
 }
 
 export function addFormHandlers(onSubmit) {
-  inputType.addEventListener('change', toggleElevationField);
+  form.addEventListener('change', function (e) {
+    if (e.target.name === 'type') showFieldsFor(e.target.value);
+  });
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     onSubmit();

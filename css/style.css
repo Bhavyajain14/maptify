@@ -139,6 +139,45 @@ select {
   min-width: 0;
 }
 
+.type-toggle {
+  border: none;
+}
+
+.type-toggle__options {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.type-toggle__option {
+  flex: 1;
+  padding: 6px 0;
+  text-align: center;
+  background-color: var(--bg);
+  cursor: pointer;
+}
+
+/* hide the radio circle but keep it usable with the keyboard */
+.type-toggle__option input {
+  position: absolute;
+  opacity: 0;
+}
+
+.type-toggle__option:has(input:checked) {
+  color: #fff;
+  background-color: var(--run);
+}
+
+.type-toggle__option:has(input[value='cycling']:checked) {
+  background-color: var(--ride);
+}
+
+.type-toggle__option:has(input:focus-visible) {
+  outline: 2px solid var(--text);
+  outline-offset: -2px;
+}
+
 .field--hidden {
   display: none;
 }
