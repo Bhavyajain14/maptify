@@ -4,6 +4,7 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 export class Workout {
   date = new Date();
   id = crypto.randomUUID();
+  description = ''; // optional note written by the user
 
   constructor(route, distance, duration) {
     this.route = route; // list of [lat, lng] points

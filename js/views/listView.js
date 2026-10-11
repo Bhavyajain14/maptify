@@ -1,3 +1,5 @@
+import { escapeHtml } from '../helpers.js';
+
 const containerWorkouts = document.querySelector('.log');
 
 function detail(icon, value, unit) {
@@ -15,6 +17,11 @@ function workoutHtml(workout) {
   return `
     <li class="log-item log-item--${workout.type}" data-id="${workout.id}">
       <h2 class="log-item__title">${workout.title}</h2>
+      ${
+        workout.description
+          ? `<p class="log-item__description">${escapeHtml(workout.description)}</p>`
+          : ''
+      }
       <button type="button" class="log-item__delete" aria-label="Delete workout">&times;</button>
       ${detail(isRunning ? '🏃‍♂️' : '🚴‍♀️', workout.distance, 'km')}
       ${detail('⏱', workout.duration, 'min')}

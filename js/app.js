@@ -102,6 +102,7 @@ export class App {
       type === 'running'
         ? new Running(this.#route, distance, duration, cadence)
         : new Cycling(this.#route, distance, duration, elevation);
+    workout.description = data.description;
 
     this.#workouts.push(workout);
     mapView.renderWorkout(workout);

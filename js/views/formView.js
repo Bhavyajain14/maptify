@@ -3,6 +3,7 @@ const inputDistance = document.getElementById('distance');
 const inputDuration = document.getElementById('duration');
 const inputCadence = document.getElementById('cadence');
 const inputElevation = document.getElementById('elevation');
+const inputDescription = document.getElementById('description');
 const errorEl = document.querySelector('.entry-form__error');
 
 // Focus stays on the map, so the user can keep clicking to add points
@@ -18,6 +19,7 @@ export function setDistance(km) {
 export function hideForm() {
   inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value =
     '';
+  inputDescription.value = '';
   showError('');
   form.classList.add('is-hidden');
 }
@@ -39,6 +41,7 @@ export function getFormData() {
     duration: +inputDuration.value,
     cadence: +inputCadence.value,
     elevation: +inputElevation.value, // empty counts as 0
+    description: inputDescription.value.trim(),
   };
 }
 

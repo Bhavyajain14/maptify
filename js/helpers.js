@@ -1,3 +1,12 @@
+// Makes user text safe to put inside HTML (so "<b>" shows as text, not bold)
+export function escapeHtml(text) {
+  return text
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
 // 135 -> "2 h 15 min"
 export function formatMinutes(totalMinutes) {
   const hours = Math.floor(totalMinutes / 60);

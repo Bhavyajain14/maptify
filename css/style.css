@@ -178,6 +178,14 @@ select {
   outline-offset: -2px;
 }
 
+.field--wide {
+  grid-column: 1 / -1;
+}
+
+textarea.field__input {
+  resize: vertical;
+}
+
 .field--hidden {
   display: none;
 }
@@ -287,6 +295,12 @@ select {
   grid-column: 1 / -1;
   font-size: 15px;
   font-weight: 600;
+}
+
+.log-item__description {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  color: var(--muted);
 }
 
 .log-item__delete {
