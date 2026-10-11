@@ -36,6 +36,10 @@ export function removeWorkout(id) {
   containerWorkouts.querySelector(`[data-id="${id}"]`)?.remove();
 }
 
+export function clearList() {
+  containerWorkouts.querySelectorAll('.workout').forEach(el => el.remove());
+}
+
 export function addListClickHandler(onWorkoutClick, onDeleteClick) {
   containerWorkouts.addEventListener('click', function (e) {
     const workoutEl = e.target.closest('.workout');

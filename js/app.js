@@ -5,6 +5,7 @@ import { saveWorkouts, loadWorkouts } from './storage.js';
 import * as mapView from './views/mapView.js';
 import * as formView from './views/formView.js';
 import * as listView from './views/listView.js';
+import * as toolbarView from './views/toolbarView.js';
 
 export class App {
   #workouts = [];
@@ -20,6 +21,7 @@ export class App {
       this._goToWorkout.bind(this),
       this._deleteWorkout.bind(this)
     );
+    toolbarView.addClearHandler(this._clearAll.bind(this));
   }
 
   _getPosition() {
@@ -90,6 +92,16 @@ export class App {
     this.#workouts = this.#workouts.filter(work => work.id !== id);
     mapView.removeMarker(id);
     listView.removeWorkout(id);
+    saveWorkouts(this.#workouts);
+  }
+
+  _clearAll() {
+    if (!this.#workouts.length) return;
+    if (!confirm('Delete all workouts?')) return;
+
+    this.#workouts.forEach(work => mapView.removeMarker(work.id));
+    this.#workouts = [];
+    listView.clearList();
     saveWorkouts(this.#workouts);
   }
 }

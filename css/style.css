@@ -55,6 +55,30 @@ a:visited {
   margin-bottom: 4rem;
 }
 
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.toolbar__btn,
+.toolbar__sort {
+  font-family: inherit;
+  font-size: 1.3rem;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 3px;
+  background-color: var(--color-dark--2);
+  color: var(--color-light--2);
+  cursor: pointer;
+}
+
+.toolbar__btn:hover {
+  background-color: var(--color-light--1);
+  color: var(--color-dark--1);
+}
+
 .workouts {
   list-style: none;
   height: 77vh;
